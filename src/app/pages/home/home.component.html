@@ -1,0 +1,182 @@
+<!-- Header -->
+<!-- 🎉 Banner superior con imagen -->
+<div class="banner-con-imagen d-flex align-items-center">
+  <div class="texto-banner px-4">
+    <h1 class="mb-0 title">
+      🎉 Pamifiesta<small class="text-muted">.com.mx</small>
+    </h1>
+    <p class="lead">🎈¡Haz de tu evento algo inolvidable!</p>
+  </div>
+</div>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-azul shadow-sm">
+  <div class="container">
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNav"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <!-- Menú a la izquierda -->
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            routerLink="/"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+            >Inicio</a
+          >
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/" routerLinkActive="active"
+            >Catálogo</a
+          >
+        </li>
+        <!-- Agrega más ítems públicos aquí si lo deseas -->
+      </ul>
+
+      <!-- "Admin" a la derecha -->
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            routerLink="/admin/login"
+            routerLinkActive="active"
+            >Admin</a
+          >
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Contenido principal -->
+<div class="container mt-">
+  <h1 class="mb-3 text-center text-azul">Encuentra lo mejor para tu fiesta</h1>
+  <div class="row g-3 mb-3">
+    <div class="col-md-4">
+      <select class="form-select" [(ngModel)]="estadoSeleccionado">
+        <option disabled selected>Selecciona un estado</option>
+        <option *ngFor="let estado of estados" [value]="estado">
+          {{ estado }}
+        </option>
+      </select>
+    </div>
+    <div class="col-md-4">
+      <select class="form-select" [(ngModel)]="municipioSeleccionado">
+        <option disabled selected>Selecciona un municipio</option>
+        <option *ngFor="let municipio of municipios" [value]="municipio">
+          {{ municipio }}
+        </option>
+      </select>
+    </div>
+    <div class="col-md-4">
+      <select class="form-select" [(ngModel)]="coloniaSeleccionada">
+        <option disabled selected>Selecciona una colonia</option>
+        <option *ngFor="let colonia of colonias" [value]="colonia">
+          {{ colonia }}
+        </option>
+      </select>
+    </div>
+  </div>
+
+  <div class="text-center mb-2">
+    <button class="btn btn-rojo px-5 py-2" (click)="buscar()">Buscar</button>
+  </div>
+
+  <section class="p-4 border rounded shadow-sm bg-light">
+    <h4 class="mb-3">Explora por Categoría</h4>
+    <div class="row g-3">
+      <div class="col-6 col-md-4 col-lg-2" *ngFor="let categoria of categorias">
+        <div
+          class="card text-center p-3"
+          [style.background-color]="categoria.colorFondo"
+          style="cursor: pointer"
+          (click)="onCategoriaClick(categoria.id)"
+        >
+          <i class="bi {{ categoria.icono }} fs-1 mb-2"></i>
+          <h5>{{ categoria.nombre }}</h5>
+        </div>
+      </div>
+      <div class="col-6 col-md-4 col-lg-2">
+        <div
+          class="card text-center p-3"
+          style="cursor: pointer; background-color: #f8f9fa"
+          (click)="onCategoriaClick(null)"
+        >
+          <i class="bi bi-grid fs-1 mb-2"></i>
+          <h5>Todas</h5>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mt-3">
+    <h4 class="mb-3">
+      <span class="badge bg-secondary">{{ serviciosFiltrados.length }}</span>
+      <!-- <small class="text-muted">({{ serviciosFiltrados.length }})</small> -->
+      Servicios disponibles
+    </h4>
+
+    <div class="row g-4">
+      <div class="col-md-4" *ngFor="let s of serviciosFiltrados">
+        <div class="card h-100 shadow-sm">
+          <img [src]="s.imagen" class="card-img-top" [alt]="s.nombre" />
+          <div class="card-body">
+            <h5 class="card-title">{{ s.nombre }}</h5>
+            <p class="card-text">{{ s.descripcion }}</p>
+            <i>Tipo: </i>
+            <span class="badge bg-yellow">{{ s.tipo }}</span
+            ><br />
+            <i>Categoria: </i>
+            <span class="badge bg-cream">{{ s.categoria }}</span>
+            <p class="mt-2 text-success fw-bold">${{ s.precio }}</p>
+          </div>
+          <a [routerLink]="['/detalle', s.id]" class="btn btn-azul mt-2"
+            >Ver más</a
+          >
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Resultados -->
+  <!-- <div class="row row-cols-1 row-cols-md-2 g-4">
+    <ng-container *ngIf="servicios$ | async as servicios">
+      <div class="col" *ngFor="let servicio of servicios">
+        <div class="card h-100 shadow-sm">
+          <img
+            [src]="servicio.imagen_url"
+            class="card-img-top"
+            alt="Imagen {{ servicio.nombre }}"
+          />
+          <div class="card-body">
+            <h5 class="card-title">{{ servicio.nombre }}</h5>
+            <p class="card-text">{{ servicio.descripcion }}</p>
+            <p class="card-text">
+              <strong>Tipo:</strong> {{ servicio.tipo }} <br />
+              <strong>Teléfono:</strong> {{ servicio.telefono }} <br />
+              <strong>Horario:</strong> {{ servicio.horario }}
+            </p>
+            <p class="card-text">
+              <strong>Precio:</strong> ${{ servicio.precio }}
+            </p>
+            <p *ngIf="servicio.descuento > 0" class="text-success">
+              <strong>Descuento:</strong> {{ servicio.descuento }}%
+            </p>
+            <a
+              [routerLink]="['/detalle', servicio.id]"
+              class="btn btn-primary mt-2"
+              >Ver más</a
+            >
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </div> -->
+</div>

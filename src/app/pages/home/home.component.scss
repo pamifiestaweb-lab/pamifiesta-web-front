@@ -1,0 +1,42 @@
+.bg-azul {
+  background-color: #1e88e5;
+}
+
+.text-azul {
+  color: #1e88e5;
+}
+
+.btn-rojo {
+  background-color: #e53935;
+  color: white;
+  border: none;
+}
+
+.btn-rojo:hover {
+  background-color: darken(#e53935, 5%);
+}
+
+.card {
+  border: 1px solid #c0c0c0;
+  border-radius: 8px;
+}
+.navbar-brand {
+  font-size: 1.4rem;
+}
+
+.nav-link {
+  font-weight: 500;
+}
+
+.nav-link.active {
+  border-bottom: 2px solid #fdd835; // amarillo
+  color: #fdd835 !important;
+}
+
+.categoria-marco {
+  border: 2px solid #ccc;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
