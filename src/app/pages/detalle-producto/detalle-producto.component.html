@@ -1,16 +1,85 @@
 <div class="container mt-5" *ngIf="servicio">
+
+  <!-- Título del Negocio/Servicio -->
   <h1 class="text-azul mb-4">{{ servicio.nombre }}</h1>
-  <div class="row">
+
+  <div class="row g-4">
+
+    <!-- Columna Izquierda -->
     <div class="col-md-6">
-      <img [src]="servicio.imagen" class="img-fluid rounded shadow-sm" />
+
+      <!-- Card para Imagen Principal -->
+      <div class="card shadow-sm border-light">
+        <img [src]="servicio.imagen" class="card-img-top" alt="Imagen del negocio">
+        <div class="card-body">
+          <p class="card-text text-muted">
+            {{ servicio.descripcion }}
+          </p>
+        </div>
+      </div>
+
+      <!-- Galería de Imágenes -->
+      <h5 class="mt-4 mb-3">Galería</h5>
+      <div class="row g-2">
+
+        <div *ngFor="let img of servicio.galeria" class="col-4">
+          <div class="card border-0 shadow-sm">
+            <img [src]="img" class="img-fluid rounded" style="object-fit: cover; height: 100px; width: 100%;">
+          </div>
+        </div>
+
+      </div>
+
     </div>
+
+    <!-- Columna Derecha -->
     <div class="col-md-6">
-      <h4 class="mb-3">Descripción</h4>
-      <p>{{ servicio.descripcion }}</p>
-      <p><strong>Tipo:</strong> {{ servicio.tipo }}</p>
-      <p><strong>Categoría:</strong> {{ servicio.categoria }}</p>
-      <p><strong>Precio:</strong> ${{ servicio.precio }}</p>
-      <a routerLink="/" class="btn btn-rojo mt-3">← Volver al catálogo</a>
+
+      <!-- Card de Características -->
+      <div class="card shadow-sm">
+        <div class="card-header bg-light fw-bold">
+          Información del servicio
+        </div>
+
+        <ul class="list-group list-group-flush">
+
+          <li class="list-group-item d-flex justify-content-between">
+            <span class="fw-semibold">Tipo</span>
+            <span>{{ servicio.tipo }}</span>
+          </li>
+
+          <li class="list-group-item d-flex justify-content-between">
+            <span class="fw-semibold">Categoría</span>
+            <span>{{ servicio.categoria }}</span>
+          </li>
+
+          <li class="list-group-item d-flex justify-content-between">
+            <span class="fw-semibold">Disponible</span>
+            <span>{{ servicio.disponible ? 'Sí' : 'No' }}</span>
+          </li>
+
+        </ul>
+
+        <!-- Precio -->
+        <div class="card-body">
+          <h4 class="text-success fw-bold">
+            ${{ servicio.precio }}
+          </h4>
+
+          <!-- Nota / descripción adicional -->
+          <div class="alert alert-secondary mt-3 mb-0">
+            {{ servicio.nota || 'Sin notas adicionales.' }}
+          </div>
+        </div>
+      </div>
+
+      <!-- Botón volver -->
+      <a routerLink="/" class="btn btn-rojo mt-4">
+        ← Volver al catálogo
+      </a>
+
     </div>
+
   </div>
+
 </div>
