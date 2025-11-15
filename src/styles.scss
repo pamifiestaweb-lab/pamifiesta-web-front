@@ -6,6 +6,25 @@ body {
   font-family: "Segoe UI", sans-serif;
 }
 
+.text-xs {
+  font-size: 0.75rem;
+}
+
+.subtitle {
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: $blue-lower;
+}
+
+.fuente-forte {
+  font-family: "Forte", cursive;
+}
+
+.fuente-arial-cursiva {
+  font-family: "Arial", sans-serif;
+  font-style: italic;
+}
+
 h1 {
   color: $azul;
 }
