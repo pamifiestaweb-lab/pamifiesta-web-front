@@ -31,6 +31,7 @@ interface Servicio {
 export class HomeComponent {
   // catalogo = inject(CatalogService);
   // servicios$ = this.catalogo.getAll();
+  collapsable = false;
   catalogo = inject(CatalogService);
   servicios$ = this.catalogo.getAll();
 
@@ -116,6 +117,18 @@ export class HomeComponent {
 
   onCategoriaClick(id: string | null) {
     this.categoriaSeleccionada = id;
+  }
+
+  obtenerUbicacion() {
+    // Aquí puedes implementar la lógica para obtener la ubicación del usuario
+
+    // Por ahora, simplemente mostramos un mensaje
+    console.log('Obteniendo ubicación del usuario...');
+    // Simulamos una ubicación
+    this.estadoSeleccionado = 'Ciudad de México';
+    this.municipioSeleccionado = 'Cuauhtémoc';
+    this.coloniaSeleccionada = 'Centro';
+    this.buscar();
   }
 
   categorias: Categoria[] = [

@@ -1,22 +1,19 @@
 <!-- Header -->
 <!-- 🎉 Banner superior con imagen -->
-<div class="banner-con-imagen d-flex align-items-center">
+<div class="banner-con-imagen d-flex align-items-center justify-content-center">
   <div class="texto-banner px-4">
-    <h1 class="mb-0 title">
-      🎉 Pamifiesta<small class="text-muted">.com.mx</small>
+    <h1 class="mb-0 fuente-forte">
+      🎈 Pamifiesta<small class="text-muted text-xs fuente-arial-cursiva">.com.mx</small>
     </h1>
-    <p class="lead">🎈¡Haz de tu evento algo inolvidable!</p>
+    <p class="lead fuente-arial-cursiva subtitle">
+      ¡El directorio oficial para todas tus fiestas!
+    </p>
   </div>
 </div>
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-azul shadow-sm">
   <div class="container">
-    <button
-      class="navbar-toggler"
-      type="button"
-      data-bs-toggle="collapse"
-      data-bs-target="#navbarNav"
-    >
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
       <span class="navbar-toggler-icon"></span>
     </button>
 
@@ -24,18 +21,11 @@
       <!-- Menú a la izquierda -->
       <ul class="navbar-nav me-auto">
         <li class="nav-item">
-          <a
-            class="nav-link"
-            routerLink="/"
-            routerLinkActive="active"
-            [routerLinkActiveOptions]="{ exact: true }"
-            >Inicio</a
-          >
+          <a class="nav-link" routerLink="/" routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }">Inicio</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="/" routerLinkActive="active"
-            >Catálogo</a
-          >
+          <a class="nav-link" routerLink="/" routerLinkActive="active">Catálogo</a>
         </li>
         <!-- Agrega más ítems públicos aquí si lo deseas -->
       </ul>
@@ -43,12 +33,7 @@
       <!-- "Admin" a la derecha -->
       <ul class="navbar-nav ms-auto">
         <li class="nav-item">
-          <a
-            class="nav-link"
-            routerLink="/admin/login"
-            routerLinkActive="active"
-            >Admin</a
-          >
+          <a class="nav-link" routerLink="/admin/login" routerLinkActive="active">Admin</a>
         </li>
       </ul>
     </div>
@@ -58,7 +43,7 @@
 <!-- Contenido principal -->
 <div class="container mt-">
   <h1 class="mb-3 text-center text-azul">Encuentra lo mejor para tu fiesta</h1>
-  <div class="row g-3 mb-3">
+  <!-- <div class="row g-3 mb-3">
     <div class="col-md-4">
       <select class="form-select" [(ngModel)]="estadoSeleccionado">
         <option disabled selected>Selecciona un estado</option>
@@ -87,28 +72,68 @@
 
   <div class="text-center mb-2">
     <button class="btn btn-rojo px-5 py-2" (click)="buscar()">Buscar</button>
+  </div> -->
+  <div
+    class="d-flex flex-column flex-md-row align-items-center justify-content-between gap-3 mb-3 text-center text-md-start">
+    <!-- Botón izquierda -->
+    <div>
+      <button class="btn btn-outline-secondary" (click)="obtenerUbicacion()">
+        Mi ubicación
+      </button>
+    </div>
+
+    <!-- Selects al centro -->
+    <div class="d-flex flex-column flex-md-row justify-content-center gap-2 flex-grow-1">
+      <select class="form-select" [(ngModel)]="estadoSeleccionado">
+        <option disabled selected>Selecciona un estado</option>
+        <option *ngFor="let estado of estados" [value]="estado">
+          {{ estado }}
+        </option>
+      </select>
+
+      <select class="form-select" [(ngModel)]="municipioSeleccionado">
+        <option disabled selected>Selecciona un municipio</option>
+        <option *ngFor="let municipio of municipios" [value]="municipio">
+          {{ municipio }}
+        </option>
+      </select>
+
+      <select class="form-select" [(ngModel)]="coloniaSeleccionada">
+        <option disabled selected>Selecciona una colonia</option>
+        <option *ngFor="let colonia of colonias" [value]="colonia">
+          {{ colonia }}
+        </option>
+      </select>
+    </div>
+
+    <!-- Botón derecha -->
+    <div>
+      <button class="btn btn-rojo px-4 py-2" (click)="buscar()">Buscar</button>
+    </div>
   </div>
 
-  <section class="p-4 border rounded shadow-sm bg-light">
-    <h4 class="mb-3">Explora por Categoría</h4>
-    <div class="row g-3">
-      <div class="col-6 col-md-4 col-lg-2" *ngFor="let categoria of categorias">
-        <div
-          class="card text-center p-3"
-          [style.background-color]="categoria.colorFondo"
-          style="cursor: pointer"
-          (click)="onCategoriaClick(categoria.id)"
-        >
+  <section class="border rounded shadow-sm" style="background: #faf2d0">
+    <div class="px-4 py-1 d-flex justify-content-between" style="
+        width: 100%;
+        background: #ffaa2b;
+        border-top-right-radius: 6px;
+        border-top-left-radius: 6px;
+      ">
+      <h5>Explora por Categoría</h5>
+      <a class="mt-1" (click)="onCategoriaClick(null); collapsable = !collapsable"><i class="bi bi-search"></i></a>
+    </div>
+    <div *ngIf="collapsable" class="row g-3 p-4">
+      <div class="col-6 col-md-4 col-lg-2" *ngFor="let categoria of categorias; let i = index">
+        <div class="card text-center p-3" [style.background-color]="categoria.colorFondo" style="cursor: pointer"
+          (click)="onCategoriaClick(categoria.id)">
           <i class="bi {{ categoria.icono }} fs-1 mb-2"></i>
           <h5>{{ categoria.nombre }}</h5>
+          <div class="w-100 d-none d-md-block" *ngIf="i === 1 || i === 2"></div>
         </div>
       </div>
       <div class="col-6 col-md-4 col-lg-2">
-        <div
-          class="card text-center p-3"
-          style="cursor: pointer; background-color: #f8f9fa"
-          (click)="onCategoriaClick(null)"
-        >
+        <div class="card text-center p-3" style="cursor: pointer; background-color: #f8f9fa"
+          (click)="onCategoriaClick(null)">
           <i class="bi bi-grid fs-1 mb-2"></i>
           <h5>Todas</h5>
         </div>
@@ -126,20 +151,33 @@
     <div class="row g-4">
       <div class="col-md-4" *ngFor="let s of serviciosFiltrados">
         <div class="card h-100 shadow-sm">
-          <img [src]="s.imagen" class="card-img-top" [alt]="s.nombre" />
+          <!-- <img [src]="s.imagen" class="card-img-top" [alt]="s.nombre" /> -->
+          <div class="position-relative">
+            <!-- Badge en la esquina superior izquierda -->
+            <div class="position-absolute top-0 start-0 m-2">
+              <span class="badge bg-cream">
+                {{ s.categoria }}
+              </span>
+              <span class="badge bg-yellow">
+                {{ s.tipo }}
+              </span>
+            </div>
+
+            <!-- Imagen -->
+            <img [src]="s.imagen" class="card-img-top" [alt]="s.nombre" />
+          </div>
+
           <div class="card-body">
             <h5 class="card-title">{{ s.nombre }}</h5>
             <p class="card-text">{{ s.descripcion }}</p>
-            <i>Tipo: </i>
+            <!-- <i>Tipo: </i>
             <span class="badge bg-yellow">{{ s.tipo }}</span
             ><br />
             <i>Categoria: </i>
-            <span class="badge bg-cream">{{ s.categoria }}</span>
-            <p class="mt-2 text-success fw-bold">${{ s.precio }}</p>
+            <span class="badge bg-cream">{{ s.categoria }}</span> -->
+            <p class="mt-0 text-success fw-bold">${{ s.precio }}</p>
           </div>
-          <a [routerLink]="['/detalle', s.id]" class="btn btn-azul mt-2"
-            >Ver más</a
-          >
+          <a [routerLink]="['/detalle', s.id]" class="btn btn-azul mt-2">Ver más</a>
         </div>
       </div>
     </div>
