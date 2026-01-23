@@ -1,3 +1,15 @@
+<nav class="navbar navbar-dark bg-azul shadow-sm">
+  <div class="container">
+      <!-- Menú a la izquierda -->
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+            <a routerLink="/" class="btn btn-outline-light">
+              ← Volver al catálogo
+            </a>
+        </li>
+      </ul>
+  </div>
+</nav>
 <div class="container mt-5" *ngIf="servicio">
 
   <!-- Título del Negocio/Servicio -->
@@ -9,7 +21,7 @@
     <div class="col-md-6">
 
       <!-- Card para Imagen Principal -->
-      <div class="card shadow-sm border-light">
+      <div class="card shadow-sm">
         <img [src]="servicio.imagen" class="card-img-top" alt="Imagen del negocio">
         <div class="card-body">
           <p class="card-text text-muted">
@@ -20,66 +32,334 @@
 
       <!-- Galería de Imágenes -->
       <h5 class="mt-4 mb-3">Galería</h5>
-      <div class="row g-2">
 
-        <div *ngFor="let img of servicio.galeria" class="col-4">
-          <div class="card border-0 shadow-sm">
-            <img [src]="img" class="img-fluid rounded" style="object-fit: cover; height: 100px; width: 100%;">
-          </div>
+      <div class="card border-0 shadow-sm p-3" style="background: #faf2d0;">
+        <div class="masonry">
+      
+          <!-- Iteración dinámica -->
+          <img 
+            *ngFor="let item of servicio.galeria; let i = index"
+            [src]="item.url"
+            class="img-fluid rounded shadow-sm gallery-img"
+            (click)="openModal(i)"
+            style="cursor:pointer;"
+          >
+      
         </div>
-
       </div>
+      
+
+<!-- MODAL -->
+<div class="modal fade" id="imageModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content modal-custom-bg"> <!-- Fondo personalizado -->
+      
+      <!-- TÍTULO -->
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalTitle"></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <!-- IMAGEN -->
+      <div class="modal-body text-center">
+        <img id="modalImage" src="" alt="" class="img-fluid modal-img">
+        
+        <!-- DESCRIPCIÓN DE LA IMAGEN -->
+        <p class="mt-3" id="modalDescription"></p>
+      </div>
+
+      <!-- FOOTER -->
+      <!-- <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Cerrar
+        </button>
+      </div> -->
+
+    </div>
+  </div>
+</div>
+
 
     </div>
 
     <!-- Columna Derecha -->
     <div class="col-md-6">
 
-      <!-- Card de Características -->
+      <!-- CARD: Descripción del servicio -->
+      <div class="card shadow-sm mb-4">
+        <div class="card-header bg-light fw-bold">
+          Descripción del servicio
+        </div>
+        <div class="card-body">
+          <p class="text-muted">{{ servicio.descripcion_servicio }}</p>
+        </div>
+      </div>
+    
+      <!-- CARD: Información del Servicio -->
       <div class="card shadow-sm">
         <div class="card-header bg-light fw-bold">
           Información del servicio
         </div>
-
+    
         <ul class="list-group list-group-flush">
-
+    
           <li class="list-group-item d-flex justify-content-between">
             <span class="fw-semibold">Tipo</span>
             <span>{{ servicio.tipo }}</span>
           </li>
-
+    
           <li class="list-group-item d-flex justify-content-between">
             <span class="fw-semibold">Categoría</span>
             <span>{{ servicio.categoria }}</span>
           </li>
-
+    
+          <!-- Horario -->
           <li class="list-group-item d-flex justify-content-between">
-            <span class="fw-semibold">Disponible</span>
-            <span>{{ servicio.disponible ? 'Sí' : 'No' }}</span>
+            <span class="fw-semibold">Horario</span>
+            <span>{{ servicio.horario || 'No disponible' }}</span>
+          </li>
+    
+          <!-- Redes Sociales -->
+          <li class="list-group-item">
+            <span class="fw-semibold d-block mb-2">Redes sociales</span>
+    
+            <div class="btn-group-sm d-flex flex-wrap gap-2">
+    
+              <a *ngIf="servicio.redes?.x"
+                 class="btn btn-outline-dark flex-grow-1"
+                 [href]="servicio.redes?.x" target="_blank">
+                <i class="bi bi-twitter-x me-1"></i> X
+              </a>
+    
+              <a *ngIf="servicio.redes?.instagram"
+                 class="btn btn-outline-danger flex-grow-1"
+                 [href]="servicio.redes?.instagram" target="_blank">
+                <i class="bi bi-instagram me-1"></i> Instagram
+              </a>
+    
+              <a *ngIf="servicio.redes?.facebook"
+                 class="btn btn-outline-primary flex-grow-1"
+                 [href]="servicio.redes?.facebook" target="_blank">
+                <i class="bi bi-facebook me-1"></i> Facebook
+              </a>
+    
+            </div>
+          </li>
+    
+          <!-- Streaming -->
+          <!-- <li class="list-group-item">
+            <span class="fw-semibold d-block mb-2">Streaming</span>
+            <div class="d-flex gap-2 flex-wrap">
+    
+              
+              <a *ngIf="servicio.streaming?.youtube"
+                 [href]="servicio.streaming?.youtube" target="_blank"
+                 class="btn btn-outline-danger btn-sm">
+                <i class="bi bi-youtube"></i> YouTube
+              </a>
+    
+              
+              <a *ngIf="servicio.streaming?.tiktok"
+                 [href]="servicio.streaming?.tiktok" target="_blank"
+                 class="btn btn-outline-dark btn-sm">
+                <i class="bi bi-tiktok"></i> TikTok
+              </a>
+    
+            </div>
+          </li> -->
+
+          <li class="list-group-item">
+            <span class="fw-semibold d-block mb-2">Streaming</span>
+    
+            <div class="btn-group-sm d-flex flex-wrap gap-2">
+    
+              <a *ngIf="servicio.streaming?.youtube"
+                 class="btn btn-outline-danger flex-grow-1"
+                 [href]="servicio.streaming?.youtube" target="_blank">
+                <i class="bi bi-youtube me-1"></i> YouTube
+              </a>
+    
+              <a *ngIf="servicio.streaming?.tiktok"
+                 class="btn btn-outline-dark flex-grow-1"
+                 [href]="servicio.streaming?.tiktok" target="_blank">
+                <i class="bi bi-tiktok me-1"></i> TikTok
+              </a>
+    
+            </div>
           </li>
 
+    
         </ul>
-
-        <!-- Precio -->
+    
+        <!-- Precio + Nota -->
         <div class="card-body">
           <h4 class="text-success fw-bold">
             ${{ servicio.precio }}
           </h4>
-
+    
           <!-- Nota / descripción adicional -->
           <div class="alert alert-secondary mt-3 mb-0">
             {{ servicio.nota || 'Sin notas adicionales.' }}
           </div>
         </div>
       </div>
+    
+      <!-- BOTONES DE CONTACTO -->
+      <!-- <div class="mt-4 d-flex flex-wrap gap-2">
+    
+        
+        <a *ngIf="servicio.whatsapp"
+           [href]="'https://wa.me/' + servicio.whatsapp"
+           target="_blank"
+           class="btn btn-success">
+          <i class="bi bi-whatsapp"></i> WhatsApp
+        </a>
+    
+        
+        <a *ngIf="servicio.telefono"
+           [href]="'tel:' + servicio.telefono"
+           class="btn btn-primary">
+          <i class="bi bi-telephone-fill"></i> Llamar
+        </a>
+    
+        
+        <a *ngIf="servicio.email"
+           [href]="'mailto:' + servicio.email"
+           class="btn btn-danger">
+          <i class="bi bi-envelope-fill"></i> Email
+        </a>
+    
+      </div> -->
+      
+      <div class="contact-buttons mt-4 d-flex flex-wrap gap-2">
 
-      <!-- Botón volver -->
-      <a routerLink="/" class="btn btn-rojo mt-4">
-        ← Volver al catálogo
-      </a>
+        <a *ngIf="servicio.whatsapp"
+           [href]="'https://wa.me/' + servicio.whatsapp"
+           target="_blank"
+           class="btn btn-success flex-grow-1 py-2">
+          <i class="bi bi-whatsapp me-1"></i> WhatsApp
+        </a>
+    
+        <a *ngIf="servicio.telefono"
+           [href]="'tel:' + servicio.telefono"
+           class="btn btn-primary flex-grow-1 py-2">
+          <i class="bi bi-telephone-fill me-1"></i> Llamar
+        </a>
+    
+        <a *ngIf="servicio.email"
+           [href]="'mailto:' + servicio.email"
+           class="btn btn-danger flex-grow-1 py-2">
+          <i class="bi bi-envelope-fill me-1"></i> Email
+        </a>
+    
+      </div>
+
+      <!-- SECCIÓN DE VIDEOS -->
+<div *ngIf="servicio.videos?.length" class="mt-4">
+  
+  <h5 class="fw-bold mb-3">Videos del servicio</h5>
+
+  <div class="row g-3">
+
+    <div class="col-6 col-md-4" 
+         *ngFor="let video of servicio.videos">
+      
+      <div class="card video-card shadow-sm" style="cursor:pointer;"
+           (click)="openVideoModal(video)">
+        
+        <img 
+          [src]="getYoutubeThumbnail(video.url)" 
+          class="card-img-top rounded"
+          alt="Video thumbnail"
+        >
+        
+        <div class="card-body p-2">
+          <p class="small text-center m-0">
+            {{ video.titulo || 'Video del servicio' }}
+          </p>
+        </div>
+
+      </div>
 
     </div>
 
   </div>
 
 </div>
+
+      
+    
+    </div>
+    
+
+  </div>
+
+  <!-- MODAL DE VIDEO -->
+<div class="modal fade" id="videoModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-xl">
+    <div class="modal-content" style="background:#0b0b0b;">
+      
+      <div class="modal-header border-0">
+        <h5 class="modal-title text-white">{{ videoTitulo }}</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                aria-label="Close" (click)="closeVideo()"></button>
+      </div>
+
+      <div class="modal-body p-0">
+        <div class="ratio ratio-16x9">
+          <iframe 
+            id="videoFrame"
+            [src]="videoEmbedUrl"
+            frameborder="0"
+            allow="autoplay; encrypted-media"
+            allowfullscreen>
+          </iframe>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+
+</div>
+
+<footer class="footer bg-azul text-light py-3 mt-5">
+  <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center">
+
+    <!-- Empresa -->
+    <div class="text-center text-md-start mb-2 mb-md-0">
+      <strong>© {{ currentYear }} Pamifiesta</strong> — Todos los derechos reservados
+    </div>
+
+    <!-- Contactos -->
+    <div class="text-center text-md-end small">
+
+      <!-- Teléfono -->
+      <span class="me-3 d-inline-block">
+        <i class="bi bi-telephone-fill"></i>
+        <a href="tel:3312345678" class="text-light text-decoration-none">
+          (33) 1234 5678
+        </a>
+      </span>
+
+      <!-- Email -->
+      <span class="me-3 d-inline-block">
+        <i class="bi bi-envelope-fill"></i>
+        <a href="mailto:contacto@pamifiesta.com.mx" class="text-light text-decoration-none">
+          contacto&#64;pamifiesta.com.mx
+        </a>
+      </span>
+
+      <!-- Sitio Web -->
+      <span class="d-inline-block">
+        <i class="bi bi-globe2"></i>
+        <a href="https://pamifiesta.com.mx" target="_blank" class="text-light text-decoration-none">
+          pamifiesta.com.mx
+        </a>
+      </span>
+
+    </div>
+  </div>
+</footer>

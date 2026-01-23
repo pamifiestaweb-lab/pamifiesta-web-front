@@ -19,3 +19,9 @@ $plata: #c0c0c0;
   color: black;
   border: 1px solid $plata;
 }
+
+:host ::ng-deep .card .list-group-item {
+  background-color: #f5f5dc !important;  // café crema
+  border-color: #c0c0c0 !important;      // plata
+}
+

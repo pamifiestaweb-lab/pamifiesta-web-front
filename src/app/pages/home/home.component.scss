@@ -1,6 +1,4 @@
-.bg-azul {
-  background-color: #ff1f9a;
-}
+
 
 .text-azul {
   color: #ff9e1f;
@@ -42,3 +40,22 @@
   background-color: #f9f9f9;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
+
+.banner-con-imagen {
+  width: 100%;
+  height: auto; /* coincide con la altura de tu imagen */
+  background-image: url('/fondo.webp');
+  background-repeat: no-repeat;
+  background-position: bottom center; /* ← esto la pone abajo */
+  background-size: cover; /* o "contain" si quieres que no recorte */
+  position: relative;
+}
+
+.trazo {
+  text-shadow: 
+    -1px -1px 0 #ffffff,
+     1px -1px 0 #ffffff,
+    -1px  1px 0 #ffffff,
+     1px  1px 0 #ffffff;
+}
+
