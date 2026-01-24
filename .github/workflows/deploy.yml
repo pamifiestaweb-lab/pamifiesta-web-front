@@ -1,0 +1,74 @@
+name: Deploy Angular to VPS (Optimized)
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    environment: production
+
+    steps:
+      # 1️⃣ Clonar repo
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 2️⃣ Configurar Node.js
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.18.1
+          cache: 'npm'
+
+      # 3️⃣ Instalar dependencias
+      - name: Install dependencies
+        run: npm ci
+
+      # 4️⃣ Build Angular para producción
+      - name: Build Angular
+        run: npm run build -- --configuration production
+
+      # 5️⃣ Preparar deploy seguro
+      - name: Prepare deployment
+        uses: appleboy/ssh-action@v0.1.6
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          script: |
+            set -e
+            echo "📦 Haciendo backup de la versión actual..."
+            if [ -d "${{ secrets.VPS_PATH }}" ]; then
+              mv ${{ secrets.VPS_PATH }} "${{ secrets.VPS_PATH }}_backup_$(date +%Y%m%d%H%M%S)"
+            fi
+            mkdir -p ${{ secrets.VPS_PATH }}
+            echo "✅ Directorio de deploy listo"
+
+      # 6️⃣ Copiar build al VPS con rsync
+      - name: Deploy via rsync
+        uses: burnett01/rsync-deployments@v4
+        with:
+          switches: "-avz --delete"
+          path: "dist/pamifiesta-frontend/"
+          remote_path: ${{ secrets.VPS_PATH }}
+          remote_host: ${{ secrets.VPS_HOST }}
+          remote_user: ${{ secrets.VPS_USER }}
+          ssh_private_key: ${{ secrets.VPS_SSH_KEY }}
+
+      # 7️⃣ Recargar Nginx
+      - name: Reload Nginx
+        uses: appleboy/ssh-action@v0.1.6
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          script: |
+            echo "🔄 Recargando Nginx..."
+            sudo systemctl reload nginx
+            echo "✅ Nginx recargado"
+
+      # 8️⃣ Confirmación final
+      - name: Deployment complete
+        run: echo "🚀 Angular app deployed successfully!"
