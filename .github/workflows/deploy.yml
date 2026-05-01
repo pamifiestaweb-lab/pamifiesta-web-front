@@ -30,6 +30,11 @@ jobs:
       - name: Build Angular
         run: npm run build -- --configuration production
 
+      - name: Debug dist
+        run: | 
+          echo "Contenido de dist:"
+          ls -R dist
+
       # 5️⃣ Preparar deploy seguro
       - name: Prepare deployment
         uses: appleboy/ssh-action@v0.1.6
