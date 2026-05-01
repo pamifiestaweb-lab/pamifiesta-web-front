@@ -77,4 +77,4 @@ jobs:
 
       # 8️⃣ Confirmación final
       - name: Deployment complete
-        run: echo "🚀 Angular app deployed successfully!"
+        run: echo "Angular app deployed successfully!"
