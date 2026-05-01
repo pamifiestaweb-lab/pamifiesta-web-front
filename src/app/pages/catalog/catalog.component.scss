@@ -1,92 +1,61 @@
-/* Google Fonts */
-// @import url('https://fonts.googleapis.com/css2?family=Kaushan+Script&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
-/* Fondo hero moderno con gradiente */
-.hero-bg {
-    // background: linear-gradient(135deg, #ff7e5f, #feb47b);
-    background: linear-gradient(135deg, #fc7654, #ffda9b);
-    border-radius: 0 2rem 2rem 0;
-  }
-  
-  /* Hover para banners */
-  .card:hover {
-    transform: scale(1.05);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-  }
-  
-  /* Tipografía */
-  h1, p, button {
-    font-family: 'Poppins', sans-serif;
-  }
 
-  .logo {
-  font-family: 'Kaushan Script', cursive;
+.text-azul {
+  color: #ff9e1f;
 }
-  
-  /* Responsive tweaks */
-  @media (max-width: 768px) {
-    .hero-bg {
-      border-radius: 0 0 2rem 2rem;
-    }
-  }
 
-  @media (min-width: 768px) {
-    
-    .banner-section {
-      overflow: auto
-    }
-    
-  }
-  
-  .banner-section {
-    scrollbar-width: thin;
-    scrollbar-color: #888 #f5f5dc;
-  }
-  
-  .banner-section::-webkit-scrollbar {
-    width: 8px;
-  }
-  
-  .banner-section::-webkit-scrollbar-track {
-    background: #f5f5dc;
-    border-radius: 4px;
-  }
-  
-  .banner-section::-webkit-scrollbar-thumb {
-    background: #888;
-    border-radius: 4px;
-  }
-  
-  .banner-section::-webkit-scrollbar-thumb:hover {
-    background: #555;
-  }
-  
-  /* Para que los banners no se vean estirados */
-  .carousel-inner img {
-    object-fit: cover;
-  }
+.btn-rojo {
+  background-color: #e53935;
+  color: white;
+  border: none;
+}
 
-  .btn-b {
-    background-color: #ffaa2b;
-    color: white;
-    border: none;
-  }
+.btn-rojo:hover {
+  background-color: darken(#e53935, 5%);
+}
 
-  .banner-img {
-    width: 100%;
-    aspect-ratio: 16 / 9;   /* Mantiene proporción perfecta */
-    object-fit: cover;
-    display: block;
-    border-radius: 0.75rem;
-  }
+.card {
+  // border: 1px solid #c0c0c0;
+  border: 2px solid #ff9e1f;
+  background: #faf2d0;
+  border-radius: 8px;
+}
+.navbar-brand {
+  font-size: 1.4rem;
+}
 
-  .btn-outline-primary {
-    transition: all 0.2s ease;
-  }
-  
-  .btn-outline-primary:hover {
-    color: #0d6efd !important;
-    border-color: #0d6efd !important;
-    background-color: rgba(13,110,253,0.05) !important; /* azul ultra suave */
-  }
-  
+.nav-link {
+  font-weight: 500;
+}
+
+.nav-link.active {
+  border-bottom: 2px solid #fdd835; // amarillo
+  color: #fdd835 !important;
+}
+
+.categoria-marco {
+  border: 2px solid #ccc;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.banner-con-imagen {
+  width: 100%;
+  height: auto; /* coincide con la altura de tu imagen */
+  background-image: url('/fondo.webp');
+  background-repeat: no-repeat;
+  background-position: bottom center; /* ← esto la pone abajo */
+  background-size: cover; /* o "contain" si quieres que no recorte */
+  position: relative;
+}
+
+.trazo {
+  text-shadow: 
+    -1px -1px 0 #ffffff,
+     1px -1px 0 #ffffff,
+    -1px  1px 0 #ffffff,
+     1px  1px 0 #ffffff;
+}
+
