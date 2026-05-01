@@ -46,7 +46,8 @@ jobs:
             set -e
             echo "📦 Haciendo backup de la versión actual..."
             if [ -d "${{ secrets.VPS_PATH }}" ]; then
-              mv ${{ secrets.VPS_PATH }} "${{ secrets.VPS_PATH }}_backup_$(date +%Y%m%d%H%M%S)"
+              mkdir -p ${{ secrets.VPS_PATH }}
+              rm -rf ${{ secrets.VPS_PATH }}/*
             fi
             mkdir -p ${{ secrets.VPS_PATH }}
             echo "✅ Directorio de deploy listo"
